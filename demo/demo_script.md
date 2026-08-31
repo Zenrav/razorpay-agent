@@ -18,7 +18,21 @@ curl -s localhost:8000/chat -H 'content-type: application/json' \
 }
 ```
 
-## 2. Guardrail — spend limit blocks the purchase
+## 2. Out of stock — agent substitutes gracefully
+
+```bash
+curl -s localhost:8000/chat -H 'content-type: application/json' \
+  -d '{"message": "buy me the running sneakers"}' | jq
+```
+
+```json
+{
+  "reply": "Running Sneakers is out of stock, so I ordered Canvas Loafers (INR 2299) instead. Order id: order_Nx2aB...",
+  "order_id": "order_Nx2aB..."
+}
+```
+
+## 3. Guardrail — spend limit blocks the purchase
 
 ```bash
 curl -s localhost:8000/chat -H 'content-type: application/json' \
@@ -32,17 +46,18 @@ curl -s localhost:8000/chat -H 'content-type: application/json' \
 }
 ```
 
-## 3. Unknown product — graceful failure
+## 4. Unknown product — graceful failure
 
 ```bash
 curl -s localhost:8000/chat -H 'content-type: application/json' \
   -d '{"message": "buy me a helicopter"}' | jq
 ```
 
-## 4. Audit trail
+## 5. Audit trail
 
 ```bash
-cat audit_log.jsonl
+curl -s localhost:8000/audit | jq   # in-memory trail
+cat audit_log.jsonl                 # same entries, on disk
 ```
 
 Every decision the agent made — placed, blocked, or failed — with the reason and

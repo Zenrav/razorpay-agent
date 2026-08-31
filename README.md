@@ -1,8 +1,9 @@
 # razorpay-agentic-checkout
 
-A chat agent that can actually buy things. You tell it what you want, a LangGraph
-agent resolves the product, checks a spend limit, and creates a Razorpay
-(test-mode) order — writing every decision to an append-only audit trail.
+A chat agent that can actually buy things — usable by a person or by another AI.
+You tell it what you want, a LangGraph agent discovers the product in the
+merchant catalog, substitutes when it is out of stock, checks a spend limit, and
+creates a Razorpay (test-mode) order — recording every decision in an audit trail.
 
 Demo video: _TODO — add link_
 
@@ -15,13 +16,18 @@ A single `POST /chat` endpoint runs a four-node LangGraph state machine:
 | Node | Responsibility |
 | --- | --- |
 | `parse_intent` | Is the user trying to buy something, or just chatting? |
-| `find_product` | Resolve the message against the hardcoded catalog |
+| `find_product` | Resolve the message against the catalog; substitute if out of stock |
 | `create_order` | Enforce the spend limit, then create a Razorpay order |
 | `handle_result` | Confirm the order, or explain the refusal gracefully |
 
 Guardrails: purchases above `SPEND_LIMIT_INR` are refused before any call to
-Razorpay, and every action (`order_created`, `order_blocked`, `order_failed`) is
-appended to `audit_log.jsonl` with a reason, amount and timestamp.
+Razorpay, and every decision (`substituted`, `order_created`, `order_blocked`,
+`order_failed`, ...) is recorded with a reason, amount and timestamp — kept in
+memory (`GET /audit`) and appended to `audit_log.jsonl`.
+
+Failure paths the agent handles: out of stock (offers the cheapest in-stock item
+in the same category, or apologizes), over the spend limit, unknown product, and
+a payment provider error.
 
 ## Setup
 
@@ -49,3 +55,4 @@ including the blocked-purchase and unknown-product paths.
 | `RAZORPAY_KEY_ID` | Razorpay test-mode key id |
 | `RAZORPAY_KEY_SECRET` | Razorpay test-mode key secret |
 | `SPEND_LIMIT_INR` | Per-order spend cap, default `5000` |
+| `AUDIT_LOG_PATH` | Audit trail file, default `audit_log.jsonl` |

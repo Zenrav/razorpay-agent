@@ -11,6 +11,7 @@ class AgentState(TypedDict, total=False):
     message: str
     intent: str
     product: dict[str, Any] | None
+    requested_product: dict[str, Any] | None
     order: dict[str, Any] | None
     error: str | None
     reply: str
