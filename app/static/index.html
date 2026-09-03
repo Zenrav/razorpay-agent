@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agentic Checkout</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Agentic Checkout</h1>
+      <p>Tell the agent what to buy. It resolves the product, checks your spend limit and creates a Razorpay test order.</p>
+    </header>
+
+    <main>
+      <section class="panel chat">
+        <div id="messages" class="messages">
+          <div class="msg agent">Hi — I can buy things for you. Try “buy me the wireless headphones”.</div>
+        </div>
+        <div class="suggestions" id="suggestions">
+          <button data-msg="buy me the wireless headphones">Happy path</button>
+          <button data-msg="buy me the running sneakers">Out of stock</button>
+          <button data-msg="order the ultrabook laptop">Over spend limit</button>
+          <button data-msg="buy me a helicopter">Unknown product</button>
+        </div>
+        <form id="composer">
+          <input id="input" autocomplete="off" placeholder="buy me the bluetooth earbuds" />
+          <button type="submit" id="send">Send</button>
+        </form>
+      </section>
+
+      <aside class="panel audit">
+        <h2>Audit trail</h2>
+        <p class="hint">Every decision the agent makes, with reason and amount.</p>
+        <ul id="audit"><li class="empty">No decisions yet.</li></ul>
+      </aside>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

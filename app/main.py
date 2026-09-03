@@ -1,10 +1,22 @@
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from app.agent.graph import get_graph
 from app.audit.logger import DECISIONS
 
+STATIC_DIR = Path(__file__).parent / "static"
+
 app = FastAPI(title="Razorpay Agentic Checkout")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+
+@app.get("/", include_in_schema=False)
+def index() -> FileResponse:
+    return FileResponse(STATIC_DIR / "index.html")
 
 
 class ChatRequest(BaseModel):

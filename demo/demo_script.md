@@ -3,6 +3,10 @@
 A sample conversation to record for the pitch video. The server is running with
 `uvicorn app.main:app --reload` and `SPEND_LIMIT_INR=5000`.
 
+For the video, drive it from the chat UI at <http://localhost:8000> — the four
+suggestion buttons run these scenarios in order and the audit panel updates live.
+The curl equivalents below are for the API-only version of the demo.
+
 ## 1. Happy path — agent places a real test-mode order
 
 ```bash

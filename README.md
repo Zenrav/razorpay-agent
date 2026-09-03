@@ -7,11 +7,13 @@ creates a Razorpay (test-mode) order — recording every decision in an audit tr
 
 Demo video: _TODO — add link_
 
+![Chat UI](demo/ui.png)
+
 ![Architecture](demo/architecture.png)
 
 ## How it works
 
-A single `POST /chat` endpoint runs a four-node LangGraph state machine:
+`POST /chat` runs a four-node LangGraph state machine:
 
 | Node | Responsibility |
 | --- | --- |
@@ -38,12 +40,21 @@ cp .env.example .env   # add your Razorpay test keys
 uvicorn app.main:app --reload
 ```
 
+Then open <http://localhost:8000> for the chat UI — a single static page (no build
+step) with one-click buttons for each demo path and a live audit-trail panel.
+
 ## Usage
 
 ```bash
 curl -s localhost:8000/chat -H 'content-type: application/json' \
   -d '{"message": "buy me the wireless headphones"}'
 ```
+
+| Route | Purpose |
+| --- | --- |
+| `GET /` | Chat UI |
+| `POST /chat` | Send a message to the agent |
+| `GET /audit` | In-memory audit trail |
 
 See [demo/demo_script.md](demo/demo_script.md) for the full walkthrough,
 including the blocked-purchase and unknown-product paths.
