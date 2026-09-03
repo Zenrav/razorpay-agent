@@ -1,8 +1,10 @@
+from typing import Optional
+
 import razorpay
 
 from app.config import RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET
 
-_client: razorpay.Client | None = None
+_client: Optional[razorpay.Client] = None
 
 
 def get_client() -> razorpay.Client:
@@ -14,7 +16,7 @@ def get_client() -> razorpay.Client:
     return _client
 
 
-def create_order(amount_inr: int, receipt: str, notes: dict | None = None) -> dict:
+def create_order(amount_inr: int, receipt: str, notes: Optional[dict] = None) -> dict:
     """Create a Razorpay test-mode order. Amounts are converted to paise."""
     return get_client().order.create(
         {

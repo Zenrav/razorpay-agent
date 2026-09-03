@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import List, Optional
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
@@ -25,8 +26,8 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     reply: str
-    order_id: str | None = None
-    log: list[dict]
+    order_id: Optional[str] = None
+    log: List[dict]
 
 
 @app.post("/chat", response_model=ChatResponse)
@@ -37,6 +38,6 @@ def chat(request: ChatRequest) -> ChatResponse:
 
 
 @app.get("/audit")
-def audit() -> list[dict]:
+def audit() -> List[dict]:
     """The in-memory audit trail of every decision made since startup."""
     return DECISIONS

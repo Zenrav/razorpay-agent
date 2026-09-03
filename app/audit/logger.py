@@ -1,13 +1,14 @@
 import json
 from datetime import datetime, timezone
+from typing import List, Optional
 
 from app.config import AUDIT_LOG_PATH
 
-DECISIONS: list[dict] = []
+DECISIONS: List[dict] = []
 """In-memory audit trail for the current process, mirrored to the JSONL file."""
 
 
-def log_action(action: str, reason: str, amount: int | None = None) -> dict:
+def log_action(action: str, reason: str, amount: Optional[int] = None) -> dict:
     """Record a single agent decision and return it."""
     entry = {
         "action": action,

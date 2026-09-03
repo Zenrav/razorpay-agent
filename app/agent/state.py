@@ -1,7 +1,7 @@
-from typing import Annotated, Any, TypedDict
+from typing import Annotated, Any, Dict, List, Optional, TypedDict
 
 
-def append(left: list, right: list) -> list:
+def append(left: List[dict], right: List[dict]) -> List[dict]:
     return left + right
 
 
@@ -10,9 +10,9 @@ class AgentState(TypedDict, total=False):
 
     message: str
     intent: str
-    product: dict[str, Any] | None
-    requested_product: dict[str, Any] | None
-    order: dict[str, Any] | None
-    error: str | None
+    product: Optional[Dict[str, Any]]
+    requested_product: Optional[Dict[str, Any]]
+    order: Optional[Dict[str, Any]]
+    error: Optional[str]
     reply: str
-    log: Annotated[list[dict[str, Any]], append]
+    log: Annotated[List[Dict[str, Any]], append]

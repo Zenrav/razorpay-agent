@@ -1,5 +1,7 @@
 """Hardcoded demo catalog. Prices are in INR."""
 
+from typing import Optional
+
 PRODUCTS = [
     {"id": "sku_tshirt", "name": "Cotton T-Shirt", "price_inr": 799, "category": "apparel", "in_stock": True,
      "keywords": ["tshirt", "t-shirt", "shirt", "tee"]},
@@ -20,7 +22,7 @@ PRODUCTS = [
 ]
 
 
-def search(query: str) -> dict | None:
+def search(query: str) -> Optional[dict]:
     """Return the first product whose name or keywords match the query."""
     q = query.lower()
     for product in PRODUCTS:
@@ -29,7 +31,7 @@ def search(query: str) -> dict | None:
     return None
 
 
-def find_substitute(product: dict) -> dict | None:
+def find_substitute(product: dict) -> Optional[dict]:
     """Return an in-stock product from the same category, cheapest first."""
     alternatives = [
         candidate
