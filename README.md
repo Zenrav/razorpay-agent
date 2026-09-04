@@ -5,7 +5,7 @@ You tell it what you want, a LangGraph agent discovers the product in the
 merchant catalog, substitutes when it is out of stock, checks a spend limit, and
 creates a Razorpay (test-mode) order — recording every decision in an audit trail.
 
-Demo video: _TODO — add link_
+Demo video: _TODO — https://drive.google.com/file/d/13XgrKLjs0J7jCHhV8ATYs8C8ifFIY7OA/view?usp=sharing
 
 ![Chat UI](demo/ui.png)
 
